@@ -1,0 +1,64 @@
+# ========================================================
+# CONFIGURAZIONE RAI-SSIPTV-PROXY
+# ========================================================
+
+# ========================================================
+# PARAMETRI DI SICUREZZA E RETE
+# Definisce quali domini esterni sono permessi.
+# ========================================================
+network_config:
+  allowed_host_suffixes:
+    - ".rai.it"
+    - ".msvdn.net"
+    - ".netrw.it"
+    - ".akamaized.net"
+    - ".cloudfront.net"
+
+# ========================================================
+# CANALI RAI (Richiede content_id)
+# Formato: slug: [nome_visualizzazione, content_id]
+# ========================================================
+rai_channels:
+  rai1: ["Rai 1", "2606803"]
+  rai2: ["Rai 2", "308718"]
+  rai3: ["Rai 3", "308709"]
+  rai4: ["Rai 4", "746966"]
+  rai5: ["Rai 5", "395276"]
+  raimovie: ["Rai Movie", "747002"]
+  raipremium: ["Rai Premium", "746992"]
+  raistoria: ["Rai Storia", "746990"]
+  rainews24: ["Rai News 24", "1"]
+  raisport: ["Rai Sport", "358025"]
+  raigulp: ["Rai Gulp", "746953"]
+  raiyoyo: ["Rai YoYo", "746899"]
+  raiscuola: ["Rai Scuola", "747011"]
+
+# ========================================================
+# CANALI DIRETTI (URL di streaming M3U8/HLS diretto)
+# Formato: slug: [nome_visualizzazione, url_diretto]
+# ========================================================
+direct_channels:
+  rete4: ["Rete 4", "https://live02-seg.msf.cdn.mediaset.net/live/ch-r4/r4-clr.isml/index.m3u8"]
+  canale5: ["Canale 5", "https://live02-seg.msf.cdn.mediaset.net/live/ch-c5/c5-clr.isml/index.m3u8"]
+  italia1: ["Italia 1", "https://live02-seg.msf.cdn.mediaset.net/live/ch-i1/i1-clr.isml/index.m3u8"]
+  la7: ["La7", "https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8"]
+  nove: ["Nove", "https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/NOVE/CMAF/index.m3u8"]
+  20mediaset: ["20 Mediaset", "https://live02-seg.msf.cdn.mediaset.net/live/ch-lb/lb-clr.isml/index.m3u8"]
+  iris: ["Iris", "https://live02-seg.msf.cdn.mediaset.net/live/ch-ki/ki-clr.isml/index.m3u8"]
+  la5: ["La 5", "https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8"]
+  cine34: ["Cine34", "https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8"]
+  focus: ["Focus", "https://live02-seg.msf.cdn.mediaset.net/live/ch-fu/fu-clr.isml/index.m3u8"]
+  topcrime: ["Top Crime", "https://live02-seg.msf.cdn.mediaset.net/live/ch-lt/lt-clr.isml/index.m3u8"]
+  boing: ["Boing", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kb/kb-clr.isml/index.m3u8"]
+  cartoonito: ["Cartoonito", "https://live02-seg.msf.cdn.mediaset.net/live/ch-la/la-clr.isml/index.m3u8"]
+  italia2: ["Italia 2", "https://live02-seg.msf.cdn.mediaset.net/live/ch-i2/i2-clr.isml/index.m3u8"]
+  tgcom24: ["TGCOM 24", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kf/kf-clr.isml/index.m3u8"]
+  mediasetextra: ["Mediaset Extra", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kq/kq-clr.isml/index.m3u8"]
+  # tv8: ["TV8", "https://hlslive-web-gcdn-skycdn-it.akamaized.net/TACT/11223/tv8web/master.m3u8?hdnts=st=1764666351~exp=1829466206~acl=/*~hmac=b0e9165b6c55027903ad103c8219f363d8765eb300c0d9a339e9767fc3509556"]
+# ========================================================
+# CANALI DINAMICI
+# URL ottenuto dinamicamente tramite API del provider
+# Formato: slug: [nome_visualizzazione, asset_id]
+# ========================================================
+dynamic_channels:
+  tv8: ["TV8", "7"]
