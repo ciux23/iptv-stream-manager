@@ -1,23 +1,22 @@
 # IPTV Stream Manager
 
-IPTV Stream Manager è un servizio web basato su Python e aiohttp per gestire una playlist IPTV destinata a client come SS IPTV.
+IPTV Stream Manager è un servizio web basato su Python e aiohttp per la gestione di playlist IPTV compatibili con client come SS IPTV.
 
-Il progetto supporta tre tipologie di canali:
+Il progetto permette di gestire differenti tipologie di stream:
 
-- Canali Rai: lo stream viene individuato e gestito dal servizio.
-- Canali diretti: utilizzano direttamente un URL HLS/M3U8 configurato.
-- Canali dinamici: l'URL dello stream viene recuperato dinamicamente dal provider.
+- Canali Rai con recupero e gestione automatica dello stream.
+- Canali diretti tramite URL HLS/M3U8 configurati manualmente.
+- Canali dinamici con recupero dell'indirizzo dello stream dal provider.
 
 ## Funzionalità
 
 - Generazione automatica della playlist M3U.
-- Gestione separata dei canali Rai, diretti e dinamici.
+- Endpoint IPTV dedicati.
 - Proxy degli stream quando necessario.
 - Riscrittura dei manifest HLS.
-- Controllo degli host autorizzati.
-- Endpoint di health check.
-- Configurazione dei canali tramite config.yaml.
-
+- Gestione dei canali tramite file config.yaml.
+- Health check del servizio.
+- Compatibilità con client IPTV come SS IPTV.
 ## Struttura del progetto
 
 iptv-stream-manager/
@@ -26,70 +25,58 @@ iptv-stream-manager/
 - config.yaml
 - compose.yaml
 - README.md
+- .gitignore
 
 ## Configurazione
 
-I canali sono configurati nel file config.yaml.
+La configurazione dei canali viene gestita tramite il file config.yaml.
 
-Le sezioni principali sono:
+Il progetto supporta tre sezioni principali:
 
-rai_channels
+### Canali Rai
 
-Contiene i canali Rai gestiti tramite content_id.
+Canali gestiti tramite identificativo del contenuto Rai.
 
-direct_channels
+### Canali diretti
 
-Contiene canali con URL diretto HLS/M3U8.
+Canali con URL diretto HLS/M3U8 configurato manualmente.
 
-dynamic_channels
+### Canali dinamici
 
-Contiene canali per i quali l'indirizzo dello stream viene recuperato dinamicamente dal provider.
-
+Canali per i quali l'indirizzo dello stream viene recuperato dinamicamente.
 ## Endpoint disponibili
 
-/health
-
-Verifica lo stato del servizio.
-
-/playlist.m3u
-
-Restituisce la playlist IPTV generata.
-
-/stream/{channel}
-
-Gestisce lo stream di un canale.
-
-/fetch/{encoded_url}
-
-Gestisce il proxy di una risorsa dello stream.
+| Endpoint | Descrizione |
+|---|---|
+| `/health` | Stato del servizio |
+| `/playlist.m3u` | Playlist IPTV generata |
+| `/stream/{channel}` | Stream di un canale |
+| `/fetch/{encoded_url}` | Proxy di una risorsa dello stream |
 
 ## Avvio con Docker Compose
 
-Il progetto include un file compose.yaml.
-
-Avvio:
+Il servizio può essere avviato tramite Docker Compose:
 
 docker compose up -d
 
-Il servizio utilizza Python 3.13 e installa automaticamente le dipendenze necessarie.
+Il container espone la porta:
 
-La porta configurata è:
+8090 -> 8080
 
-8090 sull'host verso 8080 nel container
+La porta 8090 sull'host è stata scelta per evitare conflitti con altri servizi già presenti.
 
-La porta 8090 è stata scelta per evitare conflitti con altri servizi già presenti sul sistema.
-
+La porta interna del container rimane 8080.
 ## Utilizzo con SS IPTV
 
-Dopo l'avvio la playlist è disponibile tramite:
+Dopo l'avvio del servizio, la playlist è disponibile tramite:
 
 http://HOST:8090/playlist.m3u
 
-Sostituire HOST con l'indirizzo del dispositivo dove è in esecuzione il servizio.
+Sostituire HOST con l'indirizzo del dispositivo dove gira il servizio.
 
 ## Health Check
 
-Per verificare il funzionamento:
+Verifica stato servizio:
 
 http://HOST:8090/health
 
