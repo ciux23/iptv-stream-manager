@@ -133,23 +133,6 @@ iptv-stream-manager/
 ├── LICENSE
 └── README.md
 ```
-
-
-## Updating the project
-
-To update the project:
-
-```bash
-git pull
-```
-
-Restart the container:
-
-```bash
-docker compose restart
-```
-
-
 ## Compatible IPTV Players
 
 The generated M3U playlist can be used with IPTV clients supporting standard M3U playlists, including:
