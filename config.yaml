@@ -1,63 +1,254 @@
-# ========================================================
-# CONFIGURAZIONE RAI-SSIPTV-PROXY
-# ========================================================
-
-# ========================================================
-# PARAMETRI DI SICUREZZA E RETE
-# Definisce quali domini esterni sono permessi.
-# ========================================================
 network_config:
   allowed_host_suffixes:
-    - ".rai.it"
-    - ".msvdn.net"
-    - ".netrw.it"
-    - ".akamaized.net"
-    - ".cloudfront.net"
-
-# ========================================================
-# CANALI RAI (Richiede content_id)
-# Formato: slug: [nome_visualizzazione, content_id]
-# ========================================================
+  - .rai.it
+  - .msvdn.net
+  - .netrw.it
+  - .akamaized.net
+  - .cloudfront.net
+  - .mediaset.net
 rai_channels:
-  rai1: ["Rai 1", "2606803"]
-  rai2: ["Rai 2", "308718"]
-  rai3: ["Rai 3", "308709"]
-  rai4: ["Rai 4", "746966"]
-  rai5: ["Rai 5", "395276"]
-  raimovie: ["Rai Movie", "747002"]
-  raipremium: ["Rai Premium", "746992"]
-  raistoria: ["Rai Storia", "746990"]
-  rainews24: ["Rai News 24", "1"]
-  raisport: ["Rai Sport", "358025"]
-  raigulp: ["Rai Gulp", "746953"]
-  raiyoyo: ["Rai YoYo", "746899"]
-  raiscuola: ["Rai Scuola", "747011"]
-
-# ========================================================
-# CANALI DIRETTI (URL di streaming M3U8/HLS diretto)
-# Formato: slug: [nome_visualizzazione, url_diretto]
-# ========================================================
-direct_channels:
-  rete4: ["Rete 4", "https://live02-seg.msf.cdn.mediaset.net/live/ch-r4/r4-clr.isml/index.m3u8"]
-  canale5: ["Canale 5", "https://live02-seg.msf.cdn.mediaset.net/live/ch-c5/c5-clr.isml/index.m3u8"]
-  italia1: ["Italia 1", "https://live02-seg.msf.cdn.mediaset.net/live/ch-i1/i1-clr.isml/index.m3u8"]
-  la7: ["La7", "https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8"]
-  nove: ["Nove", "https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/NOVE/CMAF/index.m3u8"]
-  20mediaset: ["20 Mediaset", "https://live02-seg.msf.cdn.mediaset.net/live/ch-lb/lb-clr.isml/index.m3u8"]
-  iris: ["Iris", "https://live02-seg.msf.cdn.mediaset.net/live/ch-ki/ki-clr.isml/index.m3u8"]
-  la5: ["La 5", "https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8"]
-  cine34: ["Cine34", "https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8"]
-  focus: ["Focus", "https://live02-seg.msf.cdn.mediaset.net/live/ch-fu/fu-clr.isml/index.m3u8"]
-  topcrime: ["Top Crime", "https://live02-seg.msf.cdn.mediaset.net/live/ch-lt/lt-clr.isml/index.m3u8"]
-  boing: ["Boing", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kb/kb-clr.isml/index.m3u8"]
-  cartoonito: ["Cartoonito", "https://live02-seg.msf.cdn.mediaset.net/live/ch-la/la-clr.isml/index.m3u8"]
-  italia2: ["Italia 2", "https://live02-seg.msf.cdn.mediaset.net/live/ch-i2/i2-clr.isml/index.m3u8"]
-  tgcom24: ["TGCOM 24", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kf/kf-clr.isml/index.m3u8"]
-  mediasetextra: ["Mediaset Extra", "https://live02-seg.msf.cdn.mediaset.net/live/ch-kq/kq-clr.isml/index.m3u8"]
-# ========================================================
-# CANALI DINAMICI
-# URL ottenuto dinamicamente tramite API del provider
-# Formato: slug: [nome_visualizzazione, asset_id]
-# ========================================================
+  rai1:
+  - Rai 1
+  - '2606803'
+  rai2:
+  - Rai 2
+  - '308718'
+  rai3:
+  - Rai 3
+  - '308709'
+  rai4:
+  - Rai 4
+  - '746966'
+  rai5:
+  - Rai 5
+  - '395276'
+  raimovie:
+  - Rai Movie
+  - '747002'
+  raipremium:
+  - Rai Premium
+  - '746992'
+  raigulp:
+  - Rai Gulp
+  - '746953'
+  raiyoyo:
+  - Rai YoYo
+  - '746899'
+  rainews24:
+  - Rai News 24
+  - '1'
+  raistoria:
+  - Rai Storia
+  - '746990'
+  raiscuola:
+  - Rai Scuola
+  - '747011'
+  raisport:
+  - Rai Sport
+  - '358025'
+  rairadio2visualradio:
+  - Rai Radio 2 Visual Radio
+  - '5674080'
 dynamic_channels:
-  tv8: ["TV8", "7"]
+  tv8:
+  - TV8
+  - '7'
+  cielo:
+  - Cielo
+  - '2'
+  skytg24:
+  - Sky TG24
+  - '1'
+direct_channels:
+  rete4:
+  - Rete 4
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-r4/r4-clr.isml/index.m3u8
+  canale5:
+  - Canale 5
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-c5/c5-clr.isml/index.m3u8
+  italia1:
+  - Italia 1
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-i1/i1-clr.isml/index.m3u8
+  la7:
+  - La7
+  - https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8
+  nove:
+  - Nove
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/NOVE/CMAF/index.m3u8
+  20mediaset:
+  - 20 Mediaset
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-lb/lb-clr.isml/index.m3u8
+  iris:
+  - Iris
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ki/ki-clr.isml/index.m3u8
+  27twentyseven:
+  - 27 Twentyseven
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ts/ts-clr.isml/index.m3u8
+  tv2000:
+  - TV 2000
+  - https://hls-live-tv2000.akamaized.net/hls/live/2028510/tv2000/master.m3u8
+  la7cinema:
+  - La7 Cinema
+  - https://viamotionhsi.netplus.ch/live/eds/la7d/browser-HLS8/la7d.m3u8
+  la5:
+  - La 5
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8
+  realtime:
+  - Real Time
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/REALTIME/CMAF/index.m3u8
+  qvc:
+  - QVC
+  - https://qrg.akamaized.net/hls/live/2017383/lsqvc1it/master.m3u8
+  foodnetwork:
+  - Food Network
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/FOODNETWORK/CMAF/index.m3u8
+  cine34:
+  - Cine34
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8
+  focus:
+  - Focus
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-fu/fu-clr.isml/index.m3u8
+  rtl1025:
+  - RTL 102.5
+  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist.m3u8
+  discoverychannel:
+  - Discovery Channel
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DISCOVERYCHANNEL/CMAF/index.m3u8
+  giallo:
+  - Giallo
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/GIALLO/CMAF/index.m3u8
+  topcrime:
+  - Top Crime
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-lt/lt-clr.isml/index.m3u8
+  boing:
+  - BOING
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kb/kb-clr.isml/index.m3u8
+  k2:
+  - K2
+  - https://d1pmpe0hs35ka5.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-39hsskpppgf72/K2_IT.m3u8
+  frisbee:
+  - Frisbee
+  - https://d6m7lubks416z.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-zmbstsedxme9s/Frisbee_IT.m3u8
+  cartoonito:
+  - Cartoonito
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-la/la-clr.isml/index.m3u8
+  super:
+  - Super!
+  - https://495c5a85d9074f29acffeaea9e0215eb.msvdn.net/super/super_main/super_main_hbbtv/playlist.m3u8
+  italia2:
+  - Italia 2
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-i2/i2-clr.isml/index.m3u8
+  tgcom24:
+  - TGCOM 24
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kf/kf-clr.isml/index.m3u8
+  dmax:
+  - DMAX
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DMAX/CMAF/index.m3u8
+  mediasetextra:
+  - Mediaset Extra
+  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kq/kq-clr.isml/index.m3u8
+  hgtvhomegardentv:
+  - HGTV – Home & Garden Tv
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/HGTV/CMAF/index.m3u8
+  turbo:
+  - Turbo
+  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/TURBO/CMAF/index.m3u8
+  sportitaliaplus:
+  - Sportitalia Plus
+  - https://sportsitalia-samsungitaly.amagi.tv/playlist.m3u8
+  traveltv:
+  - Travel TV
+  - https://streaming.softwarecreation.it/GoldTvSat/GoldTvSat/playlist.m3u8
+  donnatv:
+  - Donna TV
+  - https://5a1178b42cc03.streamlock.net/donnatv/donnatv/playlist.m3u8
+  supertennis:
+  - SuperTennis
+  - https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/aa3673f1-e178-44a9-a947-ef41db73211a/manifest.m3u8
+  almatv:
+  - Alma TV
+  - https://streaming.softwarecreation.it/AlmaTv/AlmaTv/playlist.m3u8
+  radio105tv:
+  - Radio 105 TV
+  - https://live02-seg.msr.cdn.mediaset.net/live/ch-ec/ec-clr.isml/index.m3u8
+  r101tv:
+  - R101 TV
+  - https://live02-seg.msr.cdn.mediaset.net/live/ch-er/er-clr.isml/index.m3u8
+  deejaytv:
+  - Deejay TV
+  - https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S85984808/sMO0tz9Sr2Rk/playlist.m3u8
+  radioitaliatv:
+  - RadioItaliaTV
+  - https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
+  radiokisskisstv:
+  - Radio KISS KISS TV
+  - https://kk.fluid.stream/KKMulti/smil:KissKissTV.smil/playlist.m3u8
+  rtl1025traffic:
+  - RTL 102.5 Traffic
+  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist.m3u8
+  manga:
+  - MAN-GA
+  - https://c65b9e710bde44819015af98e72cd7ab.msvdn.net/live/S93572876/aILSQPYFY3pF/playlist.m3u
+  radio24ilsole24oretv:
+  - Radio24-IlSole24OreTV
+  - https://ilsole24ore-radiovisual.akamaized.net/hls/live/2035302/persidera/master.m3u8
+  bejoykids:
+  - BeJoy.Kids
+  - https://64b16f23efbee.streamlock.net/bejoy/bejoy/playlist.m3u8
+  gamberorosso:
+  - Gambero Rosso
+  - https://2018f6355a15442ebb37007fa4f6c064.msvdn.net/live/S7530969/XWerenuxbSdW/playlist.m3u8
+  radiofreccia:
+  - RadioFreccia
+  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist.m3u8
+  rdssocialtv:
+  - RDS Social TV
+  - https://stream.rdstv.radio/index.m3u8
+  radiozeta:
+  - Radio ZETA
+  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist.m3u8
+  radiotvserieaconrds:
+  - Radio TV Serie A con RDS
+  - https://stream.radioseriea.com/50773f0d0070476a8612d9984c6059d8/index.m3u8
+  sportitaliasolocalcio:
+  - Sportitalia SOLOCALCIO
+  - https://di-g7ij0rwh.vo.lswcdn.net/sportitalia/sisolocalcio.smil/playlist.m3u8
+  bikechannel:
+  - BIKE Channel
+  - https://stream.prod-01.milano.nxmedge.net/argocdn/bikechannel/video.m3u8
+  radiomontecarlotv:
+  - Radio Montecarlo TV
+  - https://live02-seg.msr.cdn.mediaset.net/live/ch-bb/bb-clr.isml/index.m3u8
+  virginradiotv:
+  - Virgin Radio TV
+  - https://live02-seg.msr.cdn.mediaset.net/live/ch-ew/ew-clr.isml/index.m3u8
+  rai4k:
+  - Rai 4K
+  - https://raievent10-elem-live.akamaized.net/hls/live/619189/raievent10/raievent10/playlist.m3u8
+  motoritv:
+  - Motori Tv
+  - https://5f22d76e220e1.streamlock.net/servizio01/servizio01/playlist.m3u8
+  radio51tv:
+  - Radio 51 Tv
+  - https://59d7d6f47d7fc.streamlock.net/canale51/canale51/chunklist_w1193883900.m3u8
+  radiobirikinatv:
+  - Radio Birikina Tv
+  - https://tvd-bk.fluid.stream/RadioBirikinaTV/livestream/chunklist_w84398277.m3u8
+  radiobrunotv:
+  - Radio Bruno Tv
+  - https://router.xdevel.com/video0s975758-473/stream/playlist.m3u8
+  radioibiza:
+  - Radio Ibiza
+  - https://str48.fluid.stream/RadioIbizaTV/livestream/playlist.m3u8
+  radionorbatv:
+  - Radio Norba Tv
+  - https://router.xdevel.com/video0s975885-462/stream/playlist_dvr.m3u8
+  radiopiterpantv:
+  - Radio Piter Pan Tv
+  - https://tvd-piter.fluid.stream/RadioPiterpanTV/livestream/chunklist_w1866496033.m3u8
+  radioradiotv:
+  - Radio Radio Tv
+  - https://200912.global.ssl.fastly.net/646b335e2291a2022444bb7c/live_22f84390fe1411ed919df3da85a483cc/rewind-14400.m3u8
+  radioradiosatv:
+  - Radio Radiosa Tv
+  - https://stream7.zivoli.it/radiosatv/radiosatv/playlist.m3u8
