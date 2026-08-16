@@ -1,90 +1,164 @@
 # IPTV Stream Manager
 
-IPTV Stream Manager è un servizio web basato su Python e aiohttp per la gestione di playlist IPTV compatibili con client come SS IPTV.
+IPTV Stream Manager is a lightweight IPTV proxy and playlist manager based on Python and aiohttp.
 
-Il progetto permette di gestire differenti tipologie di stream:
+It generates a personal IPTV playlist compatible with M3U players such as SS IPTV, IPTV Smarters, Kodi and other compatible clients.
 
-- Canali Rai con recupero e gestione automatica dello stream.
-- Canali diretti tramite URL HLS/M3U8 configurati manualmente.
-- Canali dinamici con recupero dell'indirizzo dello stream dal provider.
+The project provides a ready-to-use configuration with selected channels, metadata, logos and HLS stream proxy support.
 
-## Funzionalità
+## Features
 
-- Generazione automatica della playlist M3U.
-- Endpoint IPTV dedicati.
-- Proxy degli stream quando necessario.
-- Riscrittura dei manifest HLS.
-- Gestione dei canali tramite file config.yaml.
-- Health check del servizio.
-- Compatibilità con client IPTV come SS IPTV.
-## Struttura del progetto
+- Automatic M3U playlist generation
+- Rai channels support
+- Mediaset channels support
+- Dynamic stream support
+- HLS proxy and manifest rewriting
+- Channel metadata support:
+  - channel name
+  - tvg-id
+  - logo
+  - group information
+- Docker Compose deployment
 
-iptv-stream-manager/
 
-- app.py
-- config.yaml
-- compose.yaml
-- README.md
-- .gitignore
+## Requirements
 
-## Configurazione
+Before starting, make sure your system has:
 
-La configurazione dei canali viene gestita tramite il file config.yaml.
+- Docker installed
+- Docker Compose installed
 
-Il progetto supporta tre sezioni principali:
+The project can run on:
 
-### Canali Rai
+- Raspberry Pi
+- NAS systems
+- Linux servers
+- Any machine supporting Docker containers
 
-Canali gestiti tramite identificativo del contenuto Rai.
 
-### Canali diretti
+## Installation
 
-Canali con URL diretto HLS/M3U8 configurato manualmente.
+Clone the repository:
 
-### Canali dinamici
+```bash
+git clone https://github.com/ciux23/iptv-stream-manager.git
+```
 
-Canali per i quali l'indirizzo dello stream viene recuperato dinamicamente.
-## Endpoint disponibili
+Enter the project directory:
 
-| Endpoint | Descrizione |
-|---|---|
-| `/health` | Stato del servizio |
-| `/playlist.m3u` | Playlist IPTV generata |
-| `/stream/{channel}` | Stream di un canale |
-| `/fetch/{encoded_url}` | Proxy di una risorsa dello stream |
+```bash
+cd iptv-stream-manager
+```
 
-## Avvio con Docker Compose
+Start the container:
 
-Il servizio può essere avviato tramite Docker Compose:
-
+```bash
 docker compose up -d
+```
 
-Il container espone la porta:
 
-8090 -> 8080
+## Usage
 
-La porta 8090 sull'host è stata scelta per evitare conflitti con altri servizi già presenti.
+After starting the container, the IPTV playlist is available at:
 
-La porta interna del container rimane 8080.
-## Utilizzo con SS IPTV
+```text
+http://YOUR_SERVER_IP:8090/playlist.m3u
+```
 
-Dopo l'avvio del servizio, la playlist è disponibile tramite:
+Replace `YOUR_SERVER_IP` with the IP address of the machine running the container.
 
-http://HOST:8090/playlist.m3u
+Example:
 
-Sostituire HOST con l'indirizzo del dispositivo dove gira il servizio.
+```text
+http://192.168.0.100:8090/playlist.m3u
+```
+
+Add this URL to your IPTV player.
+
 
 ## Health Check
 
-Verifica stato servizio:
+To verify that the service is running correctly:
 
-http://HOST:8090/health
+```text
+http://YOUR_SERVER_IP:8090/health
+```
 
-## Note
+A working installation will return:
 
-Gli URL degli stream dipendono dai rispettivi provider e possono cambiare nel tempo.
+```text
+OK
+```
 
-Il repository non contiene credenziali personali o configurazioni specifiche dell'installazione locale.
+
+## Configuration
+
+The main configuration file is:
+
+```text
+config.yaml
+```
+
+It contains:
+
+- allowed network domains
+- channel configuration
+- stream sources
+- service parameters
+
+
+The file:
+
+```text
+channels_selected.yaml
+```
+
+contains channel metadata used to generate the IPTV playlist:
+
+- channel name
+- tvg-id
+- logo
+- group information
+
+
+## Project Structure
+
+```text
+iptv-stream-manager/
+
+├── app.py
+├── compose.yaml
+├── config.yaml
+├── channels_selected.yaml
+├── LICENSE
+└── README.md
+```
+
+
+## Updating the project
+
+To update the project:
+
+```bash
+git pull
+```
+
+Restart the container:
+
+```bash
+docker compose restart
+```
+
+
+## Compatible IPTV Players
+
+The generated M3U playlist can be used with IPTV clients supporting standard M3U playlists, including:
+
+- SS IPTV
+- IPTV Smarters
+- Kodi
+- Other compatible IPTV applications
+
 
 ## Disclaimer
 
