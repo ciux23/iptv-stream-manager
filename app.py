@@ -20,6 +20,21 @@ CHANNELS = {}
 DIRECT_CHANNELS = {}
 DYNAMIC_CHANNELS = {}
 ALLOWED_HOST_SUFFIXES = []
+CHANNEL_META = {}
+
+try:
+    with open("/app/channels_selected.yaml", "r") as f:
+        selected = yaml.safe_load(f)
+
+    CHANNEL_META = {
+        c["name"].replace(" Ⓖ", "").replace(" Ⓢ", ""): c
+        for c in selected.get("channels", [])
+    }
+
+    print(f"✅ Metadata canali caricati: {len(CHANNEL_META)}")
+
+except Exception as e:
+    print(f"⚠️ Metadata canali non caricati: {e}")
 
 # Cache degli URL dei canali dinamici
 DYNAMIC_CACHE = {}
@@ -318,6 +333,14 @@ async def stream(request):
         )
 
     # ======================================================
+    # CANALE DIRETTO
+    # ======================================================
+
+    elif channel in DIRECT_CHANNELS:
+
+        _, url = DIRECT_CHANNELS[channel]
+
+    # ======================================================
     # CANALE SCONOSCIUTO
     # ======================================================
 
@@ -416,10 +439,16 @@ async def playlist(request):
 
     for slug, (name, _) in CHANNELS.items():
 
+        meta = CHANNEL_META.get(name, {})
+
         lines += [
             (
-                '#EXTINF:-1 group-title="Italia",'
-                f'tvg-country="IT",{name}'
+                '#EXTINF:-1 '
+                f'tvg-id="{meta.get("tvg_id","")}" '
+                f'tvg-name="{name}" '
+                f'tvg-logo="{meta.get("logo","")}" '
+                f'group-title="{meta.get("group","Italia")}",'
+                f'{name}'
             ),
             f"{base}/stream/{slug}"
         ]
@@ -430,10 +459,16 @@ async def playlist(request):
 
     for slug, (name, _) in DYNAMIC_CHANNELS.items():
 
+        meta = CHANNEL_META.get(name, {})
+
         lines += [
             (
-                '#EXTINF:-1 group-title="Italia",'
-                f'tvg-country="IT",{name}'
+                '#EXTINF:-1 '
+                f'tvg-id="{meta.get("tvg_id","")}" '
+                f'tvg-name="{name}" '
+                f'tvg-logo="{meta.get("logo","")}" '
+                f'group-title="{meta.get("group","Italia")}",'
+                f'{name}'
             ),
             f"{base}/stream/{slug}"
         ]
@@ -444,10 +479,16 @@ async def playlist(request):
 
     for slug, (name, url) in DIRECT_CHANNELS.items():
 
+        meta = CHANNEL_META.get(name, {})
+
         lines += [
             (
-                '#EXTINF:-1 group-title="Italia",'
-                f'tvg-country="IT",{name}'
+                '#EXTINF:-1 '
+                f'tvg-id="{meta.get("tvg_id","")}" '
+                f'tvg-name="{name}" '
+                f'tvg-logo="{meta.get("logo","")}" '
+                f'group-title="{meta.get("group","Italia")}",'
+                f'{name}'
             ),
             url
         ]
