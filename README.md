@@ -6,6 +6,33 @@ It generates a personal IPTV playlist compatible with M3U players such as SS IPT
 
 The project provides a ready-to-use configuration with selected channels, metadata, logos and HLS stream proxy support.
 
+## Quick Start
+
+1. Install Docker and Docker Compose.
+2. Clone this repository:
+
+```bash
+git clone https://github.com/ciux23/iptv-stream-manager.git
+```
+
+3. Enter the project directory:
+
+```bash
+cd iptv-stream-manager
+```
+
+4. Start the service:
+
+```bash
+docker compose up -d
+```
+
+5. Add the generated playlist to your IPTV player:
+
+```text
+http://YOUR_SERVER_IP:8090/playlist.m3u
+```
+
 ## Features
 
 - Automatic M3U playlist generation
@@ -20,7 +47,6 @@ The project provides a ready-to-use configuration with selected channels, metada
   - group information
 - Docker Compose deployment
 
-
 ## Requirements
 
 Before starting, make sure your system has:
@@ -34,7 +60,6 @@ The project can run on:
 - NAS systems
 - Linux servers
 - Any machine supporting Docker containers
-
 
 ## Installation
 
@@ -56,7 +81,6 @@ Start the container:
 docker compose up -d
 ```
 
-
 ## Usage
 
 After starting the container, the IPTV playlist is available at:
@@ -75,7 +99,6 @@ http://192.168.0.100:8090/playlist.m3u
 
 Add this URL to your IPTV player.
 
-
 ## Health Check
 
 To verify that the service is running correctly:
@@ -89,7 +112,6 @@ A working installation will return:
 ```text
 OK
 ```
-
 
 ## Configuration
 
@@ -106,7 +128,6 @@ It contains:
 - stream sources
 - service parameters
 
-
 The file:
 
 ```text
@@ -120,7 +141,6 @@ contains channel metadata used to generate the IPTV playlist:
 - logo
 - group information
 
-
 ## Project Structure
 
 ```text
@@ -133,6 +153,7 @@ iptv-stream-manager/
 ├── LICENSE
 └── README.md
 ```
+
 ## Compatible IPTV Players
 
 The generated M3U playlist can be used with IPTV clients supporting standard M3U playlists, including:
@@ -141,7 +162,6 @@ The generated M3U playlist can be used with IPTV clients supporting standard M3U
 - IPTV Smarters
 - Kodi
 - Other compatible IPTV applications
-
 
 ## Disclaimer
 
