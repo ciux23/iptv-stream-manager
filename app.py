@@ -429,7 +429,7 @@ async def proxy_fetch(request):
 
 
 async def playlist(request):
-    lines = ["#EXTM3U"]
+    lines = ['#EXTM3U url-tvg="https://epgshare01.online/epgshare01/epg_ripper_IT1.xml.gz"']
 
     base = public_base(request)
 
