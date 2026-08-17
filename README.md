@@ -6,6 +6,22 @@ It generates a personal IPTV playlist compatible with M3U players such as SS IPT
 
 The project provides a ready-to-use configuration with selected channels, metadata, logos and HLS stream proxy support.
 
+## Features
+
+- Automatic M3U playlist generation
+- Rai channels support
+- Mediaset channels support
+- Dynamic stream support
+- HLS proxy and manifest rewriting
+- Channel metadata support:
+  - channel name
+  - tvg-id
+  - logo
+  - group information
+- Docker Compose deployment
+- Health monitoring endpoint
+- Telegram notifications on service failures
+
 ## Quick Start
 
 1. Install Docker and Docker Compose.
@@ -21,65 +37,42 @@ git clone https://github.com/ciux23/iptv-stream-manager.git
 cd iptv-stream-manager
 ```
 
-4. Start the service:
+4. Configure secrets (optional, required for Telegram alerts):
+
+```bash
+cp secrets.example.yaml secrets.yaml
+```
+
+Edit `secrets.yaml` with your Telegram bot information.
+
+5. Start the service:
 
 ```bash
 docker compose up -d
 ```
 
-5. Add the generated playlist to your IPTV player:
+## Telegram Notifications
 
-```text
-http://YOUR_SERVER_IP:8090/playlist.m3u
+Telegram alerts are sent when the failure threshold is reached.
+
+Create a bot using Telegram:
+
+- Open `@BotFather`
+- Create a new bot with `/newbot`
+- Copy the generated bot token
+
+The `chat_id` can be obtained by sending a message to your bot and checking Telegram updates.
+
+Example `secrets.yaml`:
+
+```yaml
+telegram:
+  bot_token: "YOUR_BOT_TOKEN"
+  chat_id: "YOUR_CHAT_ID"
 ```
 
-## Features
-
-- Automatic M3U playlist generation
-- Rai channels support
-- Mediaset channels support
-- Dynamic stream support
-- HLS proxy and manifest rewriting
-- Channel metadata support:
-  - channel name
-  - tvg-id
-  - logo
-  - group information
-- Docker Compose deployment
-
-## Requirements
-
-Before starting, make sure your system has:
-
-- Docker installed
-- Docker Compose installed
-
-The project can run on:
-
-- Raspberry Pi
-- NAS systems
-- Linux servers
-- Any machine supporting Docker containers
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/ciux23/iptv-stream-manager.git
-```
-
-Enter the project directory:
-
-```bash
-cd iptv-stream-manager
-```
-
-Start the container:
-
-```bash
-docker compose up -d
-```
+`secrets.yaml` contains private data and must not be uploaded to GitHub.
+Use `secrets.example.yaml` as the template.
 
 ## Usage
 
@@ -89,33 +82,37 @@ After starting the container, the IPTV playlist is available at:
 http://YOUR_SERVER_IP:8090/playlist.m3u
 ```
 
-Replace `YOUR_SERVER_IP` with the IP address of the machine running the container.
-
 Example:
 
 ```text
 http://192.168.0.100:8090/playlist.m3u
 ```
 
-Add this URL to your IPTV player.
-
 ## Health Check
 
-To verify that the service is running correctly:
+Verify the service status:
 
 ```text
 http://YOUR_SERVER_IP:8090/health
 ```
 
-A working installation will return:
+Example response:
 
-```text
-OK
+```json
+{
+  "status": "ok",
+  "channels": 81,
+  "config_loaded": true,
+  "failures": 0,
+  "threshold": 3
+}
 ```
+
+When the failure threshold is reached, the status becomes `critical` and a Telegram notification is sent.
 
 ## Configuration
 
-The main configuration file is:
+Main configuration file:
 
 ```text
 config.yaml
@@ -134,12 +131,7 @@ The file:
 channels_selected.yaml
 ```
 
-contains channel metadata used to generate the IPTV playlist:
-
-- channel name
-- tvg-id
-- logo
-- group information
+contains channel metadata used to generate the IPTV playlist.
 
 ## Project Structure
 
@@ -150,6 +142,7 @@ iptv-stream-manager/
 ├── compose.yaml
 ├── config.yaml
 ├── channels_selected.yaml
+├── secrets.example.yaml
 ├── LICENSE
 └── README.md
 ```
