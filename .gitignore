@@ -6,3 +6,4 @@ __pycache__/
 *.backup
 *.tar.gz
 *.log
+secrets.yaml

@@ -17,6 +17,22 @@ logging.basicConfig(
 
 # --- COSTANTI GLOBALI IMMUTABILI ---
 RAI_USER_AGENT = "rainet/4.0.5"
+
+# Caricamento secrets locali
+try:
+    with open("/app/secrets.yaml") as f:
+        SECRETS = yaml.safe_load(f) or {}
+except FileNotFoundError:
+    SECRETS = {}
+
+TELEGRAM_BOT_TOKEN = (
+    SECRETS.get("telegram", {}).get("bot_token")
+)
+
+TELEGRAM_CHAT_ID = (
+    SECRETS.get("telegram", {}).get("chat_id")
+)
+
 TIMEOUT = ClientTimeout(total=25)
 URI_ATTRIBUTE = re.compile(r'URI="([^"]+)"')
 # ------------------------------------
@@ -50,6 +66,7 @@ DYNAMIC_LOCKS = {}
 # Failure threshold per health check
 FAILURE_COUNT = 0
 FAILURE_THRESHOLD = 3
+TELEGRAM_ALERT_SENT = False
 
 # Rinnova il token prima della sua scadenza effettiva
 DYNAMIC_CACHE_MARGIN = 30
@@ -124,6 +141,33 @@ def decode_url(value):
     ).decode()
 
 
+async def send_telegram(message):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        logging.warning("Telegram non configurato")
+        return
+
+    url = (
+        f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    )
+
+    try:
+        async with ClientSession() as session:
+            await session.post(
+                url,
+                json={
+                    "chat_id": TELEGRAM_CHAT_ID,
+                    "text": message
+                }
+            )
+
+        logging.info("Notifica Telegram inviata")
+
+    except Exception as exc:
+        logging.error(
+            f"Errore invio Telegram: {exc}"
+        )
+
+
 def is_allowed(url):
     parsed = urlparse(url)
     host = (parsed.hostname or "").lower()
@@ -168,6 +212,8 @@ def rewrite_manifest(request, manifest, source_url):
 
 
 async def fetch(session, url):
+    global FAILURE_COUNT
+
     if not is_allowed(url):
         raise web.HTTPForbidden(text="Host non consentito")
 
@@ -177,14 +223,19 @@ async def fetch(session, url):
             allow_redirects=True
         )
         response.raise_for_status()
+
+        FAILURE_COUNT = 0
+
         return response
 
     except asyncio.TimeoutError as exc:
+        FAILURE_COUNT += 1
         raise web.HTTPGatewayTimeout(
             text="Timeout del flusso Rai"
         ) from exc
 
     except Exception as exc:
+        FAILURE_COUNT += 1
         raise web.HTTPBadGateway(
             text=f"Flusso non disponibile: {exc}"
         ) from exc
@@ -511,12 +562,20 @@ async def playlist(request):
 
 
 async def health(request):
-    global FAILURE_COUNT
+    global FAILURE_COUNT, TELEGRAM_ALERT_SENT
 
     if FAILURE_COUNT >= FAILURE_THRESHOLD:
         status = "critical"
+
+        if not TELEGRAM_ALERT_SENT:
+            await send_telegram(
+                "⚠️ IPTV Stream Manager: failure threshold raggiunta"
+            )
+            TELEGRAM_ALERT_SENT = True
+
     else:
         status = "ok"
+        TELEGRAM_ALERT_SENT = False
 
     return web.json_response({
         "status": status,
