@@ -3,9 +3,16 @@ import base64
 import re
 import time
 import yaml
+import logging
+import sys
 from urllib.parse import urljoin, urlparse
 
 from aiohttp import ClientSession, ClientTimeout, web
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 # --- COSTANTI GLOBALI IMMUTABILI ---
@@ -31,10 +38,10 @@ try:
         for c in selected.get("channels", [])
     }
 
-    print(f"✅ Metadata canali caricati: {len(CHANNEL_META)}")
+    logging.info(f"Metadata canali caricati: {len(CHANNEL_META)}")
 
 except Exception as e:
-    print(f"⚠️ Metadata canali non caricati: {e}")
+    logging.warning(f"Metadata canali non caricati: {e}")
 
 # Cache degli URL dei canali dinamici
 DYNAMIC_CACHE = {}
@@ -80,19 +87,19 @@ def load_config(file_path="/app/config.yaml"):
             in config.get("dynamic_channels", {}).items()
         }
 
-        print("✅ Configurazione caricata con successo.")
+        logging.info("Configurazione caricata con successo.")
 
     except FileNotFoundError:
-        print(
-            "❌ ERRORE CRITICO: File di configurazione "
+        logging.critical(
+            "ERRORE CRITICO: File di configurazione "
             "'config.yaml' non trovato in /app. "
             "Controlla il bind mount."
         )
-        exit(1)
+        sys.exit(1)
 
     except yaml.YAMLError as e:
-        print(f"❌ ERRORE CRITICO: Errore di parsing di YAML: {e}")
-        exit(1)
+        logging.critical(f"Errore di parsing di YAML: {e}")
+        sys.exit(1)
 
 
 # Esegui il caricamento della configurazione subito all'avvio
