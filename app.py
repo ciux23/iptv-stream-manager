@@ -507,9 +507,11 @@ async def playlist(request):
 
 
 async def health(request):
-    return web.Response(
-        text="ok\n"
-    )
+    return web.json_response({
+        "status": "ok",
+        "channels": len(CHANNEL_META),
+        "config_loaded": True
+    })
 
 
 async def startup(app):
