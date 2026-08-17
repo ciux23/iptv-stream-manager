@@ -47,6 +47,10 @@ except Exception as e:
 DYNAMIC_CACHE = {}
 DYNAMIC_LOCKS = {}
 
+# Failure threshold per health check
+FAILURE_COUNT = 0
+FAILURE_THRESHOLD = 3
+
 # Rinnova il token prima della sua scadenza effettiva
 DYNAMIC_CACHE_MARGIN = 30
 # ---------------------------------------------
@@ -507,10 +511,19 @@ async def playlist(request):
 
 
 async def health(request):
+    global FAILURE_COUNT
+
+    if FAILURE_COUNT >= FAILURE_THRESHOLD:
+        status = "critical"
+    else:
+        status = "ok"
+
     return web.json_response({
-        "status": "ok",
+        "status": status,
         "channels": len(CHANNEL_META),
-        "config_loaded": True
+        "config_loaded": True,
+        "failures": FAILURE_COUNT,
+        "threshold": FAILURE_THRESHOLD
     })
 
 
