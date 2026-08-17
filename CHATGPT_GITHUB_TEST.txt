@@ -1,2 +1,0 @@
-Test file created to verify GitHub write access from ChatGPT.
-This file can be deleted.
