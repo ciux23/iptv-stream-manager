@@ -24,6 +24,8 @@ The project provides a ready-to-use configuration with selected channels, metada
 
 ## Quick Start
 
+The prebuilt image is published on GitHub Container Registry, so no local build is required.
+
 1. Install Docker and Docker Compose.
 2. Clone this repository:
 
@@ -50,6 +52,18 @@ Edit `secrets.yaml` with your Telegram bot information.
 ```bash
 docker compose up -d
 ```
+
+This pulls `ghcr.io/ciux23/iptv-stream-manager:latest` and starts the container — no build step needed.
+
+## Building from Source
+
+If you prefer to build the image yourself instead of using the prebuilt one:
+
+```bash
+docker compose -f compose.dev.yaml up -d --build
+```
+
+`compose.dev.yaml` builds the image locally using the included `Dockerfile`.
 
 ## Telegram Notifications
 
@@ -139,7 +153,9 @@ contains channel metadata used to generate the IPTV playlist.
 iptv-stream-manager/
 
 ├── app.py
+├── Dockerfile
 ├── compose.yaml
+├── compose.dev.yaml
 ├── config.yaml
 ├── channels_selected.yaml
 ├── secrets.example.yaml
