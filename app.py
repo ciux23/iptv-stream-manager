@@ -141,6 +141,9 @@ def decode_url(value):
     ).decode()
 
 
+TELEGRAM_TIMEOUT = ClientTimeout(total=5)
+
+
 async def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         logging.warning("Telegram non configurato")
@@ -151,16 +154,34 @@ async def send_telegram(message):
     )
 
     try:
-        async with ClientSession() as session:
-            await session.post(
+        async with ClientSession(timeout=TELEGRAM_TIMEOUT) as session:
+            async with session.post(
                 url,
                 json={
                     "chat_id": TELEGRAM_CHAT_ID,
                     "text": message
                 }
-            )
+            ) as response:
+
+                if response.status != 200:
+                    logging.warning(
+                        f"Telegram ha risposto con status "
+                        f"{response.status}"
+                    )
+                    return
+
+                data = await response.json()
+
+                if not data.get("ok"):
+                    logging.warning(
+                        f"Telegram ha risposto senza ok=true: {data}"
+                    )
+                    return
 
         logging.info("Notifica Telegram inviata")
+
+    except asyncio.TimeoutError:
+        logging.warning("Timeout nell'invio della notifica Telegram")
 
     except Exception:
         logging.exception("Errore invio Telegram")
