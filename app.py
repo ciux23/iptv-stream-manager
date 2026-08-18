@@ -56,8 +56,8 @@ try:
 
     logging.info(f"Metadata canali caricati: {len(CHANNEL_META)}")
 
-except Exception as e:
-    logging.warning(f"Metadata canali non caricati: {e}")
+except Exception:
+    logging.exception("Metadata canali non caricati")
 
 # Cache degli URL dei canali dinamici
 DYNAMIC_CACHE = {}
@@ -118,8 +118,8 @@ def load_config(file_path="/app/config.yaml"):
         )
         sys.exit(1)
 
-    except yaml.YAMLError as e:
-        logging.critical(f"Errore di parsing di YAML: {e}")
+    except yaml.YAMLError:
+        logging.exception("Errore di parsing di YAML")
         sys.exit(1)
 
 
@@ -162,10 +162,8 @@ async def send_telegram(message):
 
         logging.info("Notifica Telegram inviata")
 
-    except Exception as exc:
-        logging.error(
-            f"Errore invio Telegram: {exc}"
-        )
+    except Exception:
+        logging.exception("Errore invio Telegram")
 
 
 def is_allowed(url):
@@ -230,12 +228,14 @@ async def fetch(session, url):
 
     except asyncio.TimeoutError as exc:
         FAILURE_COUNT += 1
+        logging.exception(f"Timeout del flusso: {url}")
         raise web.HTTPGatewayTimeout(
             text="Timeout del flusso Rai"
         ) from exc
 
     except Exception as exc:
         FAILURE_COUNT += 1
+        logging.exception(f"Flusso non disponibile: {url}")
         raise web.HTTPBadGateway(
             text=f"Flusso non disponibile: {exc}"
         ) from exc
@@ -297,11 +297,15 @@ async def get_dynamic_stream(request, channel):
                 data = await response.json()
 
         except asyncio.TimeoutError as exc:
+            logging.exception(f"Timeout API per il canale {channel}")
             raise web.HTTPGatewayTimeout(
                 text=f"Timeout API per il canale {channel}"
             ) from exc
 
         except Exception as exc:
+            logging.exception(
+                f"Impossibile ottenere lo stream di {channel}"
+            )
             raise web.HTTPBadGateway(
                 text=(
                     f"Impossibile ottenere lo stream "
