@@ -1,16 +1,14 @@
 services:
   iptv-stream-manager:
     container_name: iptv-stream-manager
-    image: python:3.13-slim
+    build: .
     restart: unless-stopped
 
     ports:
       - "8090:8080"
 
-    command:
-      - /bin/sh
-      - -c
-      - pip install --no-cache-dir aiohttp==3.12.15 pyyaml && exec python /app/app.py
-
     volumes:
-      - ./:/app
+      - ./app.py:/app/app.py:ro
+      - ./config.yaml:/app/config.yaml:ro
+      - ./channels_selected.yaml:/app/channels_selected.yaml:ro
+      - ./secrets.yaml:/app/secrets.yaml:ro
