@@ -90,246 +90,486 @@ channel_order:
 
 rai_channels:
   rai1:
-  - Rai 1
-  - '2606803'
+    name: Rai 1
+    content_id: '2606803'
+    tvg_id: Rai1.it
+    logo: https://i.imgur.com/CAx7yRm.png
+    group: Italy
   rai2:
-  - Rai 2
-  - '308718'
+    name: Rai 2
+    content_id: '308718'
+    tvg_id: Rai2.it
+    logo: https://i.imgur.com/zA0PTcs.png
+    group: Italy
   rai3:
-  - Rai 3
-  - '308709'
+    name: Rai 3
+    content_id: '308709'
+    tvg_id: Rai3.it
+    logo: https://i.imgur.com/9kuQCIi.png
+    group: Italy
   rai4:
-  - Rai 4
-  - '746966'
+    name: Rai 4
+    content_id: '746966'
+    tvg_id: Rai4.it
+    logo: https://i.imgur.com/XFkZRfv.png
+    group: Italy
   rai5:
-  - Rai 5
-  - '395276'
+    name: Rai 5
+    content_id: '395276'
+    tvg_id: Rai5.it
+    logo: https://i.imgur.com/Leu2zTO.png
+    group: Italy
   raimovie:
-  - Rai Movie
-  - '747002'
+    name: Rai Movie
+    content_id: '747002'
+    tvg_id: RaiMovie.it
+    logo: https://i.imgur.com/RKpO8CE.png
+    group: Italy
   raipremium:
-  - Rai Premium
-  - '746992'
+    name: Rai Premium
+    content_id: '746992'
+    tvg_id: RaiPremium.it
+    logo: https://i.imgur.com/RKI4nFy.png
+    group: Italy
   raigulp:
-  - Rai Gulp
-  - '746953'
+    name: Rai Gulp
+    content_id: '746953'
+    tvg_id: RaiGulp.it
+    logo: https://i.imgur.com/lu1DPVb.png
+    group: Italy
   raiyoyo:
-  - Rai YoYo
-  - '746899'
+    name: Rai YoYo
+    content_id: '746899'
+    tvg_id: RaiYoyo.it
+    logo: https://i.imgur.com/DRSa3ys.png
+    group: Italy
   rainews24:
-  - Rai News 24
-  - '1'
+    name: Rai News 24
+    content_id: '1'
+    tvg_id: RaiNews24.it
+    logo: https://i.imgur.com/gdzGwB6.png
+    group: Italy
   raistoria:
-  - Rai Storia
-  - '746990'
+    name: Rai Storia
+    content_id: '746990'
+    tvg_id: RaiStoria.it
+    logo: https://i.imgur.com/K8y5q8x.png
+    group: Italy
   raiscuola:
-  - Rai Scuola
-  - '747011'
+    name: Rai Scuola
+    content_id: '747011'
+    tvg_id: RaiScuola.it
+    logo: https://i.imgur.com/tmtJW6s.png
+    group: Italy
   raisport:
-  - Rai Sport
-  - '358025'
+    name: Rai Sport
+    content_id: '358025'
+    tvg_id: RaiSport.it
+    logo: https://i.imgur.com/xsGljsb.png
+    group: Italy
   rairadio2visualradio:
-  - Rai Radio 2 Visual Radio
-  - '5674080'
+    name: Rai Radio 2 Visual Radio
+    content_id: '5674080'
+    tvg_id: RaiRadio2Visual.it
+    logo: https://i.imgur.com/nVBet0h.png
+    group: Italy
 
 dynamic_channels:
   tv8:
-  - TV8
-  - '7'
+    name: TV8
+    asset_id: '7'
+    tvg_id: TV8.HD.it
+    logo: https://i.imgur.com/xvoHVOU.png
+    group: Italy
   cielo:
-  - Cielo
-  - '2'
+    name: Cielo
+    asset_id: '2'
+    tvg_id: cielo.it
+    logo: https://i.imgur.com/cPluF03.png
+    group: Italy
   skytg24:
-  - Sky TG24
-  - '1'
+    name: Sky TG24
+    asset_id: '1'
+    tvg_id: Sky.TG24.it
+    logo: https://i.imgur.com/q4d3Dah.png
+    group: Italy
 
 direct_channels:
   rete4:
-  - Rete 4
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-r4/r4-clr.isml/index.m3u8
+    name: Rete 4
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-r4/r4-clr.isml/index.m3u8
+    tvg_id: Rete.4.it
+    logo: https://i.imgur.com/GWx2Fkl.png
+    group: Italy
   canale5:
-  - Canale 5
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-c5/c5-clr.isml/index.m3u8
+    name: Canale 5
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-c5/c5-clr.isml/index.m3u8
+    tvg_id: Canale.5.it
+    logo: https://i.imgur.com/p6YdiR1.png
+    group: Italy
   italia1:
-  - Italia 1
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-i1/i1-clr.isml/index.m3u8
+    name: Italia 1
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-i1/i1-clr.isml/index.m3u8
+    tvg_id: Italia.1.it
+    logo: https://i.imgur.com/oCiOxBG.png
+    group: Italy
   la7:
-  - La7
-  - https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8
+    name: La7
+    url: https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8
+    tvg_id: LA7.HD.it
+    logo: https://i.imgur.com/F90mpSa.png
+    group: Italy
   nove:
-  - Nove
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/NOVE/CMAF/index.m3u8
+    name: Nove
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/NOVE/CMAF/index.m3u8
+    tvg_id: Nove.it
+    logo: https://i.imgur.com/Hp723RU.png
+    group: Italy
   20mediaset:
-  - 20 Mediaset
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-lb/lb-clr.isml/index.m3u8
+    name: 20 Mediaset
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-lb/lb-clr.isml/index.m3u8
+    tvg_id: '20.it'
+    logo: https://i.imgur.com/It13jwX.png
+    group: Italy
   iris:
-  - Iris
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ki/ki-clr.isml/index.m3u8
+    name: Iris
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-ki/ki-clr.isml/index.m3u8
+    tvg_id: Iris.it
+    logo: https://i.imgur.com/Ixz1BY3.png
+    group: Italy
   27twentyseven:
-  - 27 Twentyseven
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ts/ts-clr.isml/index.m3u8
+    name: 27 Twentyseven
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-ts/ts-clr.isml/index.m3u8
+    tvg_id: 27Twentyseven.it
+    logo: https://i.imgur.com/y2PdPCK.png
+    group: Italy
   tv2000:
-  - TV 2000
-  - https://hls-live-tv2000.akamaized.net/hls/live/2028510/tv2000/master.m3u8
+    name: TV 2000
+    url: https://hls-live-tv2000.akamaized.net/hls/live/2028510/tv2000/master.m3u8
+    tvg_id: TV2000.va
+    logo: https://i.imgur.com/x7RaK3a.png
+    group: Italy
   la5:
-  - La 5
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8
+    name: La 5
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8
+    tvg_id: La5.it
+    logo: https://i.imgur.com/UNyJaho.png
+    group: Italy
   realtime:
-  - Real Time
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/REALTIME/CMAF/index.m3u8
+    name: Real Time
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/REALTIME/CMAF/index.m3u8
+    tvg_id: Real.Time.it
+    logo: https://i.imgur.com/9dcTYg1.png
+    group: Italy
   qvc:
-  - QVC
-  - https://qrg.akamaized.net/hls/live/2017383/lsqvc1it/master.m3u8
+    name: QVC
+    url: https://qrg.akamaized.net/hls/live/2017383/lsqvc1it/master.m3u8
+    tvg_id: QVC.it
+    logo: https://i.imgur.com/Ea7iUX2.png
+    group: Italy
   foodnetwork:
-  - Food Network
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/FOODNETWORK/CMAF/index.m3u8
+    name: Food Network
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/FOODNETWORK/CMAF/index.m3u8
+    tvg_id: Food.Network.it
+    logo: https://i.imgur.com/i60OYr9.png
+    group: Italy
   cine34:
-  - Cine34
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8
+    name: Cine34
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8
+    tvg_id: Cine34.it
+    logo: https://i.imgur.com/YyldwhI.png
+    group: Italy
   focus:
-  - Focus
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-fu/fu-clr.isml/index.m3u8
+    name: Focus
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-fu/fu-clr.isml/index.m3u8
+    tvg_id: Focus.it
+    logo: https://i.imgur.com/M4smqpF.png
+    group: Italy
   rtl1025:
-  - RTL 102.5
-  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist.m3u8
+    name: RTL 102.5
+    url: https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist.m3u8
+    tvg_id: RTL.102.5.HD.it
+    logo: https://i.imgur.com/KdissvS.png
+    group: Italy
   discoverychannel:
-  - Discovery Channel
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DISCOVERYCHANNEL/CMAF/index.m3u8
+    name: Discovery Channel
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DISCOVERYCHANNEL/CMAF/index.m3u8
+    tvg_id: Discovery.Channel.it
+    logo: https://i.imgur.com/5IxIFJ0.png
+    group: Italy
   giallo:
-  - Giallo
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/GIALLO/CMAF/index.m3u8
+    name: Giallo
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/GIALLO/CMAF/index.m3u8
+    tvg_id: Giallo.TV.it
+    logo: https://i.imgur.com/0PIRwZS.png
+    group: Italy
   topcrime:
-  - Top Crime
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-lt/lt-clr.isml/index.m3u8
+    name: Top Crime
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-lt/lt-clr.isml/index.m3u8
+    tvg_id: Top.Crime.it
+    logo: https://i.imgur.com/RFIwv9O.png
+    group: Italy
   boing:
-  - BOING
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kb/kb-clr.isml/index.m3u8
+    name: BOING
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-kb/kb-clr.isml/index.m3u8
+    tvg_id: Boing.it
+    logo: https://i.imgur.com/niSlrqT.png
+    group: Italy
   k2:
-  - K2
-  - https://d1pmpe0hs35ka5.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-39hsskpppgf72/K2_IT.m3u8
+    name: K2
+    url: https://d1pmpe0hs35ka5.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-39hsskpppgf72/K2_IT.m3u8
+    tvg_id: K2.it
+    logo: https://i.imgur.com/wlLgSiA.png
+    group: Italy
   frisbee:
-  - Frisbee
-  - https://d6m7lubks416z.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-zmbstsedxme9s/Frisbee_IT.m3u8
+    name: Frisbee
+    url: https://d6m7lubks416z.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-zmbstsedxme9s/Frisbee_IT.m3u8
+    tvg_id: Frisbee.it
+    logo: https://i.imgur.com/9y1zIAe.png
+    group: Italy
   cartoonito:
-  - Cartoonito
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-la/la-clr.isml/index.m3u8
+    name: Cartoonito
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-la/la-clr.isml/index.m3u8
+    tvg_id: Cartoonito.it
+    logo: https://i.imgur.com/oK2DcDJ.png
+    group: Italy
   super:
-  - Super!
-  - https://495c5a85d9074f29acffeaea9e0215eb.msvdn.net/super/super_main/super_main_hbbtv/playlist.m3u8
+    name: Super!
+    url: https://495c5a85d9074f29acffeaea9e0215eb.msvdn.net/super/super_main/super_main_hbbtv/playlist.m3u8
+    tvg_id: Super!.it
+    logo: https://i.imgur.com/1124YEp.png
+    group: Italy
   italia2:
-  - Italia 2
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-i2/i2-clr.isml/index.m3u8
+    name: Italia 2
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-i2/i2-clr.isml/index.m3u8
+    tvg_id: Italia.2.it
+    logo: https://i.imgur.com/nq48sjO.png
+    group: Italy
   tgcom24:
-  - TGCOM 24
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kf/kf-clr.isml/index.m3u8
+    name: TGCOM 24
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-kf/kf-clr.isml/index.m3u8
+    tvg_id: TGCom.it
+    logo: https://i.imgur.com/xautVD8.png
+    group: Italy
   dmax:
-  - DMAX
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DMAX/CMAF/index.m3u8
+    name: DMAX
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DMAX/CMAF/index.m3u8
+    tvg_id: DMAX.it
+    logo: https://i.imgur.com/dmEmRX7.png
+    group: Italy
   mediasetextra:
-  - Mediaset Extra
-  - https://live02-seg.msf.cdn.mediaset.net/live/ch-kq/kq-clr.isml/index.m3u8
+    name: Mediaset Extra
+    url: https://live02-seg.msf.cdn.mediaset.net/live/ch-kq/kq-clr.isml/index.m3u8
+    tvg_id: Mediaset.Extra.it
+    logo: https://i.imgur.com/mM8lopo.png
+    group: Italy
   hgtvhomegardentv:
-  - HGTV – Home & Garden Tv
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/HGTV/CMAF/index.m3u8
+    name: HGTV – Home & Garden Tv
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/HGTV/CMAF/index.m3u8
+    tvg_id: HGTVItaly.it
+    logo: https://i.imgur.com/emLNC0U.png
+    group: Italy
   turbo:
-  - Turbo
-  - https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/TURBO/CMAF/index.m3u8
+    name: Turbo
+    url: https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/TURBO/CMAF/index.m3u8
+    tvg_id: Motor.Trend.it
+    logo: https://i.imgur.com/TjjVjV0.png
+    group: Italy
   sportitaliaplus:
-  - Sportitalia Plus
-  - https://sportsitalia-samsungitaly.amagi.tv/playlist.m3u8
+    name: Sportitalia Plus
+    url: https://sportsitalia-samsungitaly.amagi.tv/playlist.m3u8
+    tvg_id: Sportitalia.it
+    logo: https://i.imgur.com/hu56Ya5.png
+    group: Italy
   traveltv:
-  - Travel TV
-  - https://streaming.softwarecreation.it/GoldTvSat/GoldTvSat/playlist.m3u8
+    name: Travel TV
+    url: https://streaming.softwarecreation.it/GoldTvSat/GoldTvSat/playlist.m3u8
+    tvg_id: TravelTV.it
+    logo: https://i.imgur.com/aXAUyLN.png
+    group: Italy
   donnatv:
-  - Donna TV
-  - https://5a1178b42cc03.streamlock.net/donnatv/donnatv/playlist.m3u8
+    name: Donna TV
+    url: https://5a1178b42cc03.streamlock.net/donnatv/donnatv/playlist.m3u8
+    tvg_id: DonnaTV.it
+    logo: https://i.imgur.com/Aa1Abme.png
+    group: Italy
   supertennis:
-  - SuperTennis
-  - https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/aa3673f1-e178-44a9-a947-ef41db73211a/manifest.m3u8
+    name: SuperTennis
+    url: https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/aa3673f1-e178-44a9-a947-ef41db73211a/manifest.m3u8
+    tvg_id: SuperTennis.it
+    logo: https://i.imgur.com/GzsPlbX.png
+    group: Italy
   almatv:
-  - Alma TV
-  - https://streaming.softwarecreation.it/AlmaTv/AlmaTv/playlist.m3u8
+    name: Alma TV
+    url: https://streaming.softwarecreation.it/AlmaTv/AlmaTv/playlist.m3u8
+    tvg_id: AlmaTV.it
+    logo: https://i.imgur.com/Y8JiDwN.png
+    group: Italy
   radio105tv:
-  - Radio 105 TV
-  - https://live02-seg.msr.cdn.mediaset.net/live/ch-ec/ec-clr.isml/index.m3u8
+    name: Radio 105 TV
+    url: https://live02-seg.msr.cdn.mediaset.net/live/ch-ec/ec-clr.isml/index.m3u8
+    tvg_id: Radio105TV.it
+    logo: https://i.imgur.com/3NiLKvj.png
+    group: Italy
   r101tv:
-  - R101 TV
-  - https://live02-seg.msr.cdn.mediaset.net/live/ch-er/er-clr.isml/index.m3u8
+    name: R101 TV
+    url: https://live02-seg.msr.cdn.mediaset.net/live/ch-er/er-clr.isml/index.m3u8
+    tvg_id: R101TV.it
+    logo: https://i.imgur.com/mWeEa9T.png
+    group: Italy
   deejaytv:
-  - Deejay TV
-  - https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S85984808/sMO0tz9Sr2Rk/playlist.m3u8
+    name: Deejay TV
+    url: https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S85984808/sMO0tz9Sr2Rk/playlist.m3u8
+    tvg_id: DeejayTV.it
+    logo: https://i.imgur.com/rlaKH6k.png
+    group: Italy
   radioitaliatv:
-  - RadioItaliaTV
-  - https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
+    name: RadioItaliaTV
+    url: https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
+    tvg_id: RadioItaliaTV.it
+    logo: https://i.imgur.com/4VCEJuJ.png
+    group: Italy
   radiokisskisstv:
-  - Radio KISS KISS TV
-  - https://kk.fluid.stream/KKMulti/smil:KissKissTV.smil/playlist.m3u8
+    name: Radio KISS KISS TV
+    url: https://kk.fluid.stream/KKMulti/smil:KissKissTV.smil/playlist.m3u8
+    tvg_id: KissKissTV.it
+    logo: https://i.imgur.com/UTStxDW.png
+    group: Italy
   rtl1025traffic:
-  - RTL 102.5 Traffic
-  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist.m3u8
+    name: RTL 102.5 Traffic
+    url: https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist.m3u8
+    tvg_id: RTL1025Traffic.it
+    logo: https://i.imgur.com/GH7byqm.jpeg
+    group: Italy
   manga:
-  - MAN-GA
-  - https://c65b9e710bde44819015af98e72cd7ab.msvdn.net/live/S93572876/aILSQPYFY3pF/playlist.m3u
+    name: MAN-GA
+    url: https://c65b9e710bde44819015af98e72cd7ab.msvdn.net/live/S93572876/aILSQPYFY3pF/playlist.m3u
+    tvg_id: Manga.it
+    logo: https://i.imgur.com/8a6WYU2.png
+    group: Italy
   radio24ilsole24oretv:
-  - Radio24-IlSole24OreTV
-  - https://ilsole24ore-radiovisual.akamaized.net/hls/live/2035302/persidera/master.m3u8
+    name: Radio24-IlSole24OreTV
+    url: https://ilsole24ore-radiovisual.akamaized.net/hls/live/2035302/persidera/master.m3u8
+    tvg_id: Radio24TV.it
+    logo: https://i.imgur.com/NTqrdWW.png
+    group: Italy
   bejoykids:
-  - BeJoy.Kids
-  - https://64b16f23efbee.streamlock.net/bejoy/bejoy/playlist.m3u8
+    name: BeJoy.Kids
+    url: https://64b16f23efbee.streamlock.net/bejoy/bejoy/playlist.m3u8
+    tvg_id: BeJoyKids.it
+    logo: https://i.imgur.com/zuR9Go5.png
+    group: Italy
   gamberorosso:
-  - Gambero Rosso
-  - https://2018f6355a15442ebb37007fa4f6c064.msvdn.net/live/S7530969/XWerenuxbSdW/playlist.m3u8
+    name: Gambero Rosso
+    url: https://2018f6355a15442ebb37007fa4f6c064.msvdn.net/live/S7530969/XWerenuxbSdW/playlist.m3u8
+    tvg_id: GamberoRosso.it
+    logo: https://i.imgur.com/RApMW5x.png
+    group: Italy
   radiofreccia:
-  - RadioFreccia
-  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist.m3u8
+    name: RadioFreccia
+    url: https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist.m3u8
+    tvg_id: RadioFrecciaTV.it
+    logo: https://i.imgur.com/J5N9F7Z.png
+    group: Italy
   rdssocialtv:
-  - RDS Social TV
-  - https://stream.rdstv.radio/index.m3u8
+    name: RDS Social TV
+    url: https://stream.rdstv.radio/index.m3u8
+    tvg_id: RDSSocialTV.it
+    logo: https://i.imgur.com/TY6FhqI.png
+    group: Italy
   radiozeta:
-  - Radio ZETA
-  - https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist.m3u8
+    name: Radio ZETA
+    url: https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist.m3u8
+    tvg_id: RadioZetaTV.it
+    logo: https://i.imgur.com/0MgCm1n.png
+    group: Italy
   radiotvserieaconrds:
-  - Radio TV Serie A con RDS
-  - https://stream.radioseriea.com/50773f0d0070476a8612d9984c6059d8/index.m3u8
+    name: Radio TV Serie A con RDS
+    url: https://stream.radioseriea.com/50773f0d0070476a8612d9984c6059d8/index.m3u8
+    tvg_id: RadioTVSerieA.it
+    logo: https://i.imgur.com/NzDeCIx.png
+    group: Italy
   sportitaliasolocalcio:
-  - Sportitalia SOLOCALCIO
-  - https://di-g7ij0rwh.vo.lswcdn.net/sportitalia/sisolocalcio.smil/playlist.m3u8
+    name: Sportitalia SOLOCALCIO
+    url: https://di-g7ij0rwh.vo.lswcdn.net/sportitalia/sisolocalcio.smil/playlist.m3u8
+    tvg_id: SportitaliaSolocalcio.it
+    logo: https://i.imgur.com/hu56Ya5.png
+    group: Italy
   bikechannel:
-  - BIKE Channel
-  - https://stream.prod-01.milano.nxmedge.net/argocdn/bikechannel/video.m3u8
+    name: BIKE Channel
+    url: https://stream.prod-01.milano.nxmedge.net/argocdn/bikechannel/video.m3u8
+    tvg_id: Bike.it
+    logo: https://i.imgur.com/4IzVSQI.png
+    group: Italy
   radiomontecarlotv:
-  - Radio Montecarlo TV
-  - https://live02-seg.msr.cdn.mediaset.net/live/ch-bb/bb-clr.isml/index.m3u8
+    name: Radio Montecarlo TV
+    url: https://live02-seg.msr.cdn.mediaset.net/live/ch-bb/bb-clr.isml/index.m3u8
+    tvg_id: RadioMonteCarloTV.it
+    logo: https://i.imgur.com/3TMMXmS.png
+    group: Italy
   virginradiotv:
-  - Virgin Radio TV
-  - https://live02-seg.msr.cdn.mediaset.net/live/ch-ew/ew-clr.isml/index.m3u8
+    name: Virgin Radio TV
+    url: https://live02-seg.msr.cdn.mediaset.net/live/ch-ew/ew-clr.isml/index.m3u8
+    tvg_id: VirginRadioTV.it
+    logo: https://i.imgur.com/7Im3HI1.png
+    group: Italy
   rai4k:
-  - Rai 4K
-  - https://raievent10-elem-live.akamaized.net/hls/live/619189/raievent10/raievent10/playlist.m3u8
+    name: Rai 4K
+    url: https://raievent10-elem-live.akamaized.net/hls/live/619189/raievent10/raievent10/playlist.m3u8
+    tvg_id: Rai4K.it
+    logo: https://i.imgur.com/5gkt9DD.png
+    group: Italy
   motoritv:
-  - Motori Tv
-  - https://5f22d76e220e1.streamlock.net/servizio01/servizio01/playlist.m3u8
+    name: Motori Tv
+    url: https://5f22d76e220e1.streamlock.net/servizio01/servizio01/playlist.m3u8
+    tvg_id: ''
+    logo: https://i.imgur.com/NWXQKbl.png
+    group: Italy
   radio51tv:
-  - Radio 51 Tv
-  - https://59d7d6f47d7fc.streamlock.net/canale51/canale51/chunklist_w1193883900.m3u8
+    name: Radio 51 Tv
+    url: https://59d7d6f47d7fc.streamlock.net/canale51/canale51/chunklist_w1193883900.m3u8
+    tvg_id: ''
+    logo: https://uaznao.com/wp-content/uploads/2023/03/radio51.png
+    group: Italy
   radiobirikinatv:
-  - Radio Birikina Tv
-  - https://tvd-bk.fluid.stream/RadioBirikinaTV/livestream/chunklist_w84398277.m3u8
+    name: Radio Birikina Tv
+    url: https://tvd-bk.fluid.stream/RadioBirikinaTV/livestream/chunklist_w84398277.m3u8
+    tvg_id: ''
+    logo: https://uaznao.com/wp-content/uploads/2023/03/radiobirikina.png
+    group: Italy
   radiobrunotv:
-  - Radio Bruno Tv
-  - https://router.xdevel.com/video0s975758-473/stream/playlist.m3u8
+    name: Radio Bruno Tv
+    url: https://router.xdevel.com/video0s975758-473/stream/playlist.m3u8
+    tvg_id: ''
+    logo: https://i.imgur.com/y4vKE83.png
+    group: Italy
   radioibiza:
-  - Radio Ibiza
-  - https://str48.fluid.stream/RadioIbizaTV/livestream/playlist.m3u8
+    name: Radio Ibiza
+    url: https://str48.fluid.stream/RadioIbizaTV/livestream/playlist.m3u8
+    tvg_id: ''
+    logo: https://i.imgur.com/uu0DHY5.png
+    group: Italy
   radionorbatv:
-  - Radio Norba Tv
-  - https://router.xdevel.com/video0s975885-462/stream/playlist_dvr.m3u8
+    name: Radio Norba Tv
+    url: https://router.xdevel.com/video0s975885-462/stream/playlist_dvr.m3u8
+    tvg_id: RadionorbaTV.it
+    logo: https://i.imgur.com/qftBPM9.png
+    group: Italy
   radiopiterpantv:
-  - Radio Piter Pan Tv
-  - https://tvd-piter.fluid.stream/RadioPiterpanTV/livestream/chunklist_w1866496033.m3u8
+    name: Radio Piter Pan Tv
+    url: https://tvd-piter.fluid.stream/RadioPiterpanTV/livestream/chunklist_w1866496033.m3u8
+    tvg_id: ''
+    logo: https://uaznao.com/wp-content/uploads/2023/03/radiopiterpan.png
+    group: Italy
   radioradiotv:
-  - Radio Radio Tv
-  - https://200912.global.ssl.fastly.net/646b335e2291a2022444bb7c/live_22f84390fe1411ed919df3da85a483cc/rewind-14400.m3u8
+    name: Radio Radio Tv
+    url: https://200912.global.ssl.fastly.net/646b335e2291a2022444bb7c/live_22f84390fe1411ed919df3da85a483cc/rewind-14400.m3u8
+    tvg_id: RadioRadioTV.it
+    logo: https://i.imgur.com/iKuRg2b.png
+    group: Italy
   radioradiosatv:
-  - Radio Radiosa Tv
-  - https://stream7.zivoli.it/radiosatv/radiosatv/playlist.m3u8
+    name: Radio Radiosa Tv
+    url: https://stream7.zivoli.it/radiosatv/radiosatv/playlist.m3u8
+    tvg_id: ''
+    logo: https://i.imgur.com/8kqyxvz.png
+    group: Italy

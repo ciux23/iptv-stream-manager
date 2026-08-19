@@ -43,22 +43,8 @@ CHANNELS = {}
 DIRECT_CHANNELS = {}
 DYNAMIC_CHANNELS = {}
 ALLOWED_HOST_SUFFIXES = []
-CHANNEL_META = {}
 CHANNEL_ORDER = []
 
-try:
-    with open("/app/channels_selected.yaml", "r") as f:
-        selected = yaml.safe_load(f)
-
-    CHANNEL_META = {
-        c["name"].replace(" Ⓖ", "").replace(" Ⓢ", ""): c
-        for c in selected.get("channels", [])
-    }
-
-    logging.info(f"Metadata canali caricati: {len(CHANNEL_META)}")
-
-except Exception:
-    logging.exception("Metadata canali non caricati")
 
 # Cache degli URL dei canali dinamici
 DYNAMIC_CACHE = {}
@@ -91,23 +77,20 @@ def load_config(file_path="/app/config.yaml"):
 
         # Mappa Rai Channels
         CHANNELS = {
-            slug: (name, content_id)
-            for slug, (name, content_id)
-            in config.get("rai_channels", {}).items()
+            slug: data
+            for slug, data in config.get("rai_channels", {}).items()
         }
 
         # Mappa Direct Channels
         DIRECT_CHANNELS = {
-            slug: (name, url)
-            for slug, (name, url)
-            in config.get("direct_channels", {}).items()
+            slug: data
+            for slug, data in config.get("direct_channels", {}).items()
         }
 
         # Mappa Dynamic Channels
         DYNAMIC_CHANNELS = {
-            slug: (name, asset_id)
-            for slug, (name, asset_id)
-            in config.get("dynamic_channels", {}).items()
+            slug: data
+            for slug, data in config.get("dynamic_channels", {}).items()
         }
 
         # Ordine di visualizzazione dei canali (numerazione LCN)
@@ -297,7 +280,7 @@ async def get_dynamic_stream(request, channel):
             text="Canale dinamico sconosciuto"
         )
 
-    _, asset_id = DYNAMIC_CHANNELS[channel]
+    asset_id = DYNAMIC_CHANNELS[channel]["asset_id"]
 
     # Un lock separato per ogni canale evita richieste duplicate
     # all'API quando arrivano più richieste contemporaneamente.
@@ -417,7 +400,7 @@ async def stream(request):
 
     if channel in CHANNELS:
 
-        _, content_id = CHANNELS[channel]
+        content_id = CHANNELS[channel]["content_id"]
 
         url = (
             "https://mediapolis.rai.it/"
@@ -447,7 +430,7 @@ async def stream(request):
 
     elif channel in DIRECT_CHANNELS:
 
-        _, url = DIRECT_CHANNELS[channel]
+        url = DIRECT_CHANNELS[channel]["url"]
 
     # ======================================================
     # CANALE SCONOSCIUTO
@@ -550,28 +533,29 @@ async def playlist(request):
     for slug in CHANNEL_ORDER:
 
         if slug in CHANNELS:
-            name, _ = CHANNELS[slug]
+            data = CHANNELS[slug]
             target = f"{base}/stream/{slug}"
 
         elif slug in DYNAMIC_CHANNELS:
-            name, _ = DYNAMIC_CHANNELS[slug]
+            data = DYNAMIC_CHANNELS[slug]
             target = f"{base}/stream/{slug}"
 
         elif slug in DIRECT_CHANNELS:
-            name, target = DIRECT_CHANNELS[slug]
+            data = DIRECT_CHANNELS[slug]
+            target = data.get("url", "")
 
         else:
             continue
 
-        meta = CHANNEL_META.get(name, {})
+        name = data.get("name", slug)
 
         lines += [
             (
                 '#EXTINF:-1 '
-                f'tvg-id="{meta.get("tvg_id","")}" '
+                f'tvg-id="{data.get("tvg_id","")}" '
                 f'tvg-name="{name}" '
-                f'tvg-logo="{meta.get("logo","")}" '
-                f'group-title="{meta.get("group","Italia")}",'
+                f'tvg-logo="{data.get("logo","")}" '
+                f'group-title="{data.get("group","Italia")}",'
                 f'{name}'
             ),
             target
@@ -601,7 +585,7 @@ async def health(request):
 
     return web.json_response({
         "status": status,
-        "channels": len(CHANNEL_META),
+        "channels": len(CHANNELS) + len(DYNAMIC_CHANNELS) + len(DIRECT_CHANNELS),
         "config_loaded": True,
         "failures": FAILURE_COUNT,
         "threshold": FAILURE_THRESHOLD

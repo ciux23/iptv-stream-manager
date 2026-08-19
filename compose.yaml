@@ -9,5 +9,4 @@ services:
 
     volumes:
       - ./config.yaml:/app/config.yaml:ro
-      - ./channels_selected.yaml:/app/channels_selected.yaml:ro
       - ./secrets.yaml:/app/secrets.yaml:ro
