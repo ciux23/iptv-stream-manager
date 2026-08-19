@@ -157,7 +157,6 @@ iptv-stream-manager/
 ├── compose.yaml
 ├── compose.dev.yaml
 ├── config.yaml
-├── channels_selected.yaml
 ├── secrets.example.yaml
 ├── LICENSE
 └── README.md
@@ -167,10 +166,11 @@ iptv-stream-manager/
 
 The generated M3U playlist can be used with IPTV clients supporting standard M3U playlists, including:
 
-- SS IPTV
-- IPTV Smarters
-- Kodi
+- SS IPTV (Tested on Lg WebOs TV)
+- IPTV Smarters (Tested on IPTVnator on MacOs 26.6)
+- Kodi (Tested on Amazon Firestick 3td Gen)
 - Other compatible IPTV applications
+- 
 
 ## Disclaimer
 
