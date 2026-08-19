@@ -139,13 +139,6 @@ It contains:
 - stream sources
 - service parameters
 
-The file:
-
-```text
-channels_selected.yaml
-```
-
-contains channel metadata used to generate the IPTV playlist.
 
 ## Project Structure
 
