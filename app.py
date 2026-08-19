@@ -44,6 +44,7 @@ DIRECT_CHANNELS = {}
 DYNAMIC_CHANNELS = {}
 ALLOWED_HOST_SUFFIXES = []
 CHANNEL_META = {}
+CHANNEL_ORDER = []
 
 try:
     with open("/app/channels_selected.yaml", "r") as f:
@@ -77,6 +78,7 @@ def load_config(file_path="/app/config.yaml"):
     """Carica la configurazione dai file YAML."""
     global CHANNELS, DIRECT_CHANNELS
     global DYNAMIC_CHANNELS, ALLOWED_HOST_SUFFIXES
+    global CHANNEL_ORDER
 
     try:
         with open(file_path, "r") as f:
@@ -107,6 +109,26 @@ def load_config(file_path="/app/config.yaml"):
             for slug, (name, asset_id)
             in config.get("dynamic_channels", {}).items()
         }
+
+        # Ordine di visualizzazione dei canali (numerazione LCN)
+        # Eventuali canali non elencati qui vengono aggiunti
+        # in coda, nell'ordine originale rai -> dinamici -> diretti.
+        declared_order = config.get("channel_order", [])
+        known_slugs = (
+            set(CHANNELS) | set(DYNAMIC_CHANNELS) | set(DIRECT_CHANNELS)
+        )
+
+        CHANNEL_ORDER = [
+            slug for slug in declared_order if slug in known_slugs
+        ]
+
+        remaining = (
+            list(CHANNELS) + list(DYNAMIC_CHANNELS) + list(DIRECT_CHANNELS)
+        )
+
+        for slug in remaining:
+            if slug not in CHANNEL_ORDER:
+                CHANNEL_ORDER.append(slug)
 
         logging.info("Configurazione caricata con successo.")
 
@@ -521,10 +543,25 @@ async def playlist(request):
     base = public_base(request)
 
     # ======================================================
-    # CANALI RAI
+    # CANALI, NELL'ORDINE DEFINITO DA CHANNEL_ORDER
+    # (numerazione LCN, indipendente dal tipo di canale)
     # ======================================================
 
-    for slug, (name, _) in CHANNELS.items():
+    for slug in CHANNEL_ORDER:
+
+        if slug in CHANNELS:
+            name, _ = CHANNELS[slug]
+            target = f"{base}/stream/{slug}"
+
+        elif slug in DYNAMIC_CHANNELS:
+            name, _ = DYNAMIC_CHANNELS[slug]
+            target = f"{base}/stream/{slug}"
+
+        elif slug in DIRECT_CHANNELS:
+            name, target = DIRECT_CHANNELS[slug]
+
+        else:
+            continue
 
         meta = CHANNEL_META.get(name, {})
 
@@ -537,47 +574,7 @@ async def playlist(request):
                 f'group-title="{meta.get("group","Italia")}",'
                 f'{name}'
             ),
-            f"{base}/stream/{slug}"
-        ]
-
-    # ======================================================
-    # CANALI DINAMICI
-    # ======================================================
-
-    for slug, (name, _) in DYNAMIC_CHANNELS.items():
-
-        meta = CHANNEL_META.get(name, {})
-
-        lines += [
-            (
-                '#EXTINF:-1 '
-                f'tvg-id="{meta.get("tvg_id","")}" '
-                f'tvg-name="{name}" '
-                f'tvg-logo="{meta.get("logo","")}" '
-                f'group-title="{meta.get("group","Italia")}",'
-                f'{name}'
-            ),
-            f"{base}/stream/{slug}"
-        ]
-
-    # ======================================================
-    # CANALI DIRETTI
-    # ======================================================
-
-    for slug, (name, url) in DIRECT_CHANNELS.items():
-
-        meta = CHANNEL_META.get(name, {})
-
-        lines += [
-            (
-                '#EXTINF:-1 '
-                f'tvg-id="{meta.get("tvg_id","")}" '
-                f'tvg-name="{name}" '
-                f'tvg-logo="{meta.get("logo","")}" '
-                f'group-title="{meta.get("group","Italia")}",'
-                f'{name}'
-            ),
-            url
+            target
         ]
 
     return web.Response(

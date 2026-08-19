@@ -6,6 +6,88 @@ network_config:
   - .akamaized.net
   - .cloudfront.net
   - .mediaset.net
+  - .netplus.ch
+
+channel_order:
+  - rai1
+  - rai2
+  - rai3
+  - rete4
+  - canale5
+  - italia1
+  - la7
+  - tv8
+  - nove
+  - 20mediaset
+  - rai4
+  - iris
+  - rai5
+  - raimovie
+  - raipremium
+  - cielo
+  - 27twentyseven
+  - tv2000
+  - la5
+  - realtime
+  - qvc
+  - foodnetwork
+  - cine34
+  - focus
+  - rtl1025
+  - discoverychannel
+  - giallo
+  - topcrime
+  - boing
+  - k2
+  - raigulp
+  - raiyoyo
+  - frisbee
+  - rainews24
+  - raistoria
+  - raiscuola
+  - raisport
+  - rairadio2visualradio
+  - skytg24
+  - italia2
+  - tgcom24
+  - dmax
+  - mediasetextra
+  - hgtvhomegardentv
+  - turbo
+  - sportitaliaplus
+  - traveltv
+  - donnatv
+  - supertennis
+  - almatv
+  - radio105tv
+  - r101tv
+  - deejaytv
+  - radioitaliatv
+  - radiokisskisstv
+  - rtl1025traffic
+  - manga
+  - radio24ilsole24oretv
+  - bejoykids
+  - gamberorosso
+  - radiofreccia
+  - rdssocialtv
+  - radiozeta
+  - radiotvserieaconrds
+  - sportitaliasolocalcio
+  - bikechannel
+  - radiomontecarlotv
+  - virginradiotv
+  - rai4k
+  - motoritv
+  - radio51tv
+  - radiobirikinatv
+  - radiobrunotv
+  - radioibiza
+  - radionorbatv
+  - radiopiterpantv
+  - radioradiotv
+  - radioradiosatv
+
 rai_channels:
   rai1:
   - Rai 1
@@ -49,6 +131,7 @@ rai_channels:
   rairadio2visualradio:
   - Rai Radio 2 Visual Radio
   - '5674080'
+
 dynamic_channels:
   tv8:
   - TV8
@@ -59,6 +142,7 @@ dynamic_channels:
   skytg24:
   - Sky TG24
   - '1'
+
 direct_channels:
   rete4:
   - Rete 4
@@ -87,9 +171,6 @@ direct_channels:
   tv2000:
   - TV 2000
   - https://hls-live-tv2000.akamaized.net/hls/live/2028510/tv2000/master.m3u8
-  la7cinema:
-  - La7 Cinema
-  - https://viamotionhsi.netplus.ch/live/eds/la7d/browser-HLS8/la7d.m3u8
   la5:
   - La 5
   - https://live02-seg.msf.cdn.mediaset.net/live/ch-ka/ka-clr.isml/index.m3u8
