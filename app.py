@@ -8,6 +8,7 @@ import sys
 from urllib.parse import urljoin, urlparse
 
 from aiohttp import ClientSession, ClientTimeout, web
+from curl_cffi.requests import AsyncSession # <-- NUOVA IMPORTAZIONE
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,6 +18,9 @@ logging.basicConfig(
 
 # --- COSTANTI GLOBALI IMMUTABILI ---
 RAI_USER_AGENT = "rainet/4.0.5"
+# Aggiornato l'User-Agent per la consistenza con il test curl_cffi
+RAI_USER_AGENT_CHROME = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
 
 # Caricamento secrets locali
 try:
@@ -94,8 +98,6 @@ def load_config(file_path="/app/config.yaml"):
         }
 
         # Ordine di visualizzazione dei canali (numerazione LCN)
-        # Eventuali canali non elencati qui vengono aggiunti
-        # in coda, nell'ordine originale rai -> dinamici -> diretti.
         declared_order = config.get("channel_order", [])
         known_slugs = (
             set(CHANNELS) | set(DYNAMIC_CHANNELS) | set(DIRECT_CHANNELS)
@@ -235,44 +237,79 @@ def rewrite_manifest(request, manifest, source_url):
     return "\n".join(lines) + "\n"
 
 
+# --------------------------------------------------
+# NUOVO: CLASS ADATTATORE PER CURLL_CFFI
+# Serve a far sembrare la risposta di curl_cffi un oggetto aiohttp
+# --------------------------------------------------
+class RaiResponseWrapper:
+    def __init__(self, curl_res):
+        self.status = curl_res.status_code
+        self.url = curl_res.url
+        self.headers = dict(curl_res.headers) 
+        self._content = curl_res.content
+        self._text = curl_res.text
+
+    async def text(self):
+        return self._text
+
+    async def read(self):
+        return self._content
+
+    def release(self):
+        pass 
+
+
+# --- FUNZIONE FETCH IBRIDA (modificata per usare curl_cffi per Rai) ---
 async def fetch(session, url):
     global FAILURE_COUNT
 
     if not is_allowed(url):
         raise web.HTTPForbidden(text="Host non consentito")
 
+    # Controlliamo se l'URL appartiene alle CDN Rai / MainStreaming
+    is_rai_cdn = ("rai.it" in url or "msvdn.net" in url or "mainstreaming" in url)
+
     try:
-        response = await session.get(
-            url,
-            allow_redirects=True
-        )
-        response.raise_for_status()
-
-        FAILURE_COUNT = 0
-
-        return response
+        if is_rai_cdn:
+            # SE È RAI: Usiamo curl_cffi con l'impronta TLS di Chrome
+            async with AsyncSession(impersonate="chrome120") as rai_session:
+                res = await rai_session.get(
+                    url,
+                    headers={"User-Agent": RAI_USER_AGENT_CHROME},
+                    allow_redirects=True,
+                    timeout=15
+                )
+            
+            if res.status_code != 200:
+                raise Exception(f"Rai CDN ha risposto con status {res.status_code}")
+            
+            FAILURE_COUNT = 0
+            # Restituiamo l'adattatore che imita aiohttp
+            return RaiResponseWrapper(res)
+        else:
+            # ALTRIMENTI (Sky, Mediaset, etc.): Usiamo il normale aiohttp
+            response = await session.get(
+                url,
+                allow_redirects=True
+            )
+            response.raise_for_status()
+            FAILURE_COUNT = 0
+            return response
 
     except asyncio.TimeoutError as exc:
         FAILURE_COUNT += 1
         logging.exception(f"Timeout del flusso: {url}")
-        raise web.HTTPGatewayTimeout(
-            text="Timeout del flusso Rai"
-        ) from exc
+        raise web.HTTPGatewayTimeout(text="Timeout del flusso") from exc
 
     except Exception as exc:
         FAILURE_COUNT += 1
         logging.exception(f"Flusso non disponibile: {url}")
-        raise web.HTTPBadGateway(
-            text=f"Flusso non disponibile: {exc}"
-        ) from exc
+        raise web.HTTPBadGateway(text=f"Flusso non disponibile: {exc}") from exc
 
 
 async def get_dynamic_stream(request, channel):
     """
     Recupera l'URL HLS di un canale dinamico tramite l'API del provider.
-
-    L'URL viene memorizzato in cache fino a 30 secondi prima
-    della scadenza del token.
     """
 
     if channel not in DYNAMIC_CHANNELS:
@@ -282,8 +319,6 @@ async def get_dynamic_stream(request, channel):
 
     asset_id = DYNAMIC_CHANNELS[channel]["asset_id"]
 
-    # Un lock separato per ogni canale evita richieste duplicate
-    # all'API quando arrivano più richieste contemporaneamente.
     lock = DYNAMIC_LOCKS.setdefault(
         channel,
         asyncio.Lock()
@@ -293,22 +328,14 @@ async def get_dynamic_stream(request, channel):
 
         now = time.time()
 
-        # --------------------------------------------------
         # CONTROLLO CACHE
-        # --------------------------------------------------
-
         cached = DYNAMIC_CACHE.get(channel)
-
         if cached:
             stream_url, expires_at = cached
-
             if now < expires_at - DYNAMIC_CACHE_MARGIN:
                 return stream_url
 
-        # --------------------------------------------------
         # RICHIESTA NUOVO URL
-        # --------------------------------------------------
-
         api_url = (
             "https://apid.sky.it/vdp/v1/getLivestream"
             f"?id={asset_id}&isMobile=false"
@@ -318,7 +345,6 @@ async def get_dynamic_stream(request, channel):
             async with request.app["session"].get(
                 api_url
             ) as response:
-
                 response.raise_for_status()
                 data = await response.json()
 
@@ -339,10 +365,7 @@ async def get_dynamic_stream(request, channel):
                 )
             ) from exc
 
-        # --------------------------------------------------
         # ESTRAZIONE STREAMING URL
-        # --------------------------------------------------
-
         stream_url = data.get("streaming_url")
 
         if not stream_url:
@@ -353,10 +376,7 @@ async def get_dynamic_stream(request, channel):
                 )
             )
 
-        # --------------------------------------------------
         # CONTROLLO SICUREZZA URL
-        # --------------------------------------------------
-
         if not is_allowed(stream_url):
             raise web.HTTPForbidden(
                 text=(
@@ -365,24 +385,16 @@ async def get_dynamic_stream(request, channel):
                 )
             )
 
-        # --------------------------------------------------
         # DETERMINAZIONE SCADENZA TOKEN
-        # --------------------------------------------------
-
         expires_at = now + 240
-
         match = re.search(
             r"(?:^|[?~])exp=(\d+)",
             stream_url
         )
-
         if match:
             expires_at = int(match.group(1))
 
-        # --------------------------------------------------
         # SALVATAGGIO CACHE
-        # --------------------------------------------------
-
         DYNAMIC_CACHE[channel] = (
             stream_url,
             expires_at
@@ -397,16 +409,12 @@ async def stream(request):
     # ======================================================
     # CANALE RAI
     # ======================================================
-
     if channel in CHANNELS:
-
         content_id = CHANNELS[channel]["content_id"]
-
         url = (
             "https://mediapolis.rai.it/"
             "relinker/relinkerServlet.htm"
         )
-
         url += (
             f"?cont={content_id}"
             "&output=7"
@@ -416,9 +424,7 @@ async def stream(request):
     # ======================================================
     # CANALE DINAMICO
     # ======================================================
-
     elif channel in DYNAMIC_CHANNELS:
-
         url = await get_dynamic_stream(
             request,
             channel
@@ -427,24 +433,20 @@ async def stream(request):
     # ======================================================
     # CANALE DIRETTO
     # ======================================================
-
     elif channel in DIRECT_CHANNELS:
-
         url = DIRECT_CHANNELS[channel]["url"]
 
     # ======================================================
     # CANALE SCONOSCIUTO
     # ======================================================
-
     else:
         raise web.HTTPNotFound(
             text="Canale sconosciuto"
         )
 
     # ======================================================
-    # RECUPERO MANIFEST
+    # RECUPERO MANIFEST (Ora utilizza la funzione fetch ibrida)
     # ======================================================
-
     response = await fetch(
         request.app["session"],
         url
@@ -472,12 +474,12 @@ async def proxy_fetch(request):
         url = decode_url(
             request.match_info["encoded_url"]
         )
-
     except Exception as exc:
         raise web.HTTPBadRequest(
             text="URL non valido"
         ) from exc
 
+    # Fetch usa la logica ibrida
     response = await fetch(
         request.app["session"],
         url
@@ -491,9 +493,8 @@ async def proxy_fetch(request):
 
         if (
             "mpegurl" in content_type.lower()
-            or response.url.path.endswith(".m3u8")
+            or str(response.url).split("?")[0].endswith(".m3u8")
         ):
-
             return web.Response(
                 text=rewrite_manifest(
                     request,
@@ -522,12 +523,10 @@ async def proxy_fetch(request):
 
 async def playlist(request):
     lines = ['#EXTM3U url-tvg="https://epgshare01.online/epgshare01/epg_ripper_IT1.xml.gz"']
-
     base = public_base(request)
 
     # ======================================================
     # CANALI, NELL'ORDINE DEFINITO DA CHANNEL_ORDER
-    # (numerazione LCN, indipendente dal tipo di canale)
     # ======================================================
 
     for slug in CHANNEL_ORDER:
@@ -574,8 +573,9 @@ async def health(request):
         status = "critical"
 
         if not TELEGRAM_ALERT_SENT:
+            # Nota: Ho riportato la frase più neutra per evitare allarmi inutili
             await send_telegram(
-                "⚠️ IPTV Stream Manager: failure threshold raggiunta"
+                "⚠️ IPTV Stream Manager: threshold di fallimento raggiunta. Controllare la rete."
             )
             TELEGRAM_ALERT_SENT = True
 
@@ -593,6 +593,7 @@ async def health(request):
 
 
 async def startup(app):
+    # Questa sessione aiohttp viene usata per tutto tranne le chiamate Rai
     app["session"] = ClientSession(
         timeout=TIMEOUT,
         headers={

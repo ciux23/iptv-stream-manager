@@ -2,7 +2,8 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir aiohttp==3.12.15 pyyaml==6.0.2
+# LA MODIFICA CRUCIALE È QUI: Aggiungiamo curl-cffi
+RUN pip install --no-cache-dir aiohttp==3.12.15 pyyaml==6.0.2 curl-cffi
 
 RUN useradd --create-home --shell /usr/sbin/nologin appuser
 
